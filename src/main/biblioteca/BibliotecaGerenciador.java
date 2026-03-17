@@ -16,3 +16,4 @@ public interface BibliotecaGerenciador {
     public void salvarDados() throws IOException;
     //public void carregarDados() throws IOException, ClassCastException;
 }
+//

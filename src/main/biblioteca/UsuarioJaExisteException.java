@@ -5,3 +5,4 @@ public class UsuarioJaExisteException extends RuntimeException {
         super(message);
     }
 }
+//
