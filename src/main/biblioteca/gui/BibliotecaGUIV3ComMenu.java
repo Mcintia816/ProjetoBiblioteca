@@ -21,7 +21,7 @@ public class BibliotecaGUIV3ComMenu extends JFrame {
         setResizable(false);
         getContentPane().setBackground(Color.white);
 
-        // Título e imagem
+        
         titulo = new JLabel("Bem-vindo à Biblioteca", JLabel.CENTER);
         titulo.setForeground(Color.BLUE);
         titulo.setFont(new Font("Serif", Font.BOLD, 24));
@@ -32,7 +32,7 @@ public class BibliotecaGUIV3ComMenu extends JFrame {
         add(imagem);
         add(new JLabel());
 
-        // Menus
+        
         JMenu menuCadastrar = new JMenu("Cadastrar");
         JMenuItem menuCadastrarLivro = new JMenuItem("Cadastrar Livro");
         JMenuItem menuCadastrarUsuario = new JMenuItem("Cadastrar Usuário");
@@ -49,13 +49,13 @@ public class BibliotecaGUIV3ComMenu extends JFrame {
         JMenuItem menuSalvarDados = new JMenuItem("Salvar Dados");
         menuSalvar.add(menuSalvarDados);
 
-        // Adiciona menus à barra
+        
         barraDeMenu.add(menuCadastrar);
         barraDeMenu.add(menuOperacoes);
         barraDeMenu.add(menuSalvar);
         setJMenuBar(barraDeMenu);
 
-        // Ações dos menus
+        
         menuCadastrarLivro.addActionListener(ae -> cadastrarLivro());
         menuCadastrarUsuario.addActionListener(ae -> cadastrarUsuario());
         menuEmprestar.addActionListener(ae -> emprestarLivro());
