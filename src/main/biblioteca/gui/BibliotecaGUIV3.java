@@ -10,7 +10,7 @@ import java.awt.*;
 public class BibliotecaGUIV3 extends JFrame {
 
     JLabel titulo, imagem;
-    ImageIcon bibliotecaImg = new ImageIcon("./imgs/biblioteca.jpg"); // imagem central
+    ImageIcon bibliotecaImg = new ImageIcon("./imgs/biblioteca.jpg");
     ImageIcon addImg = new ImageIcon("./imgs/icons/add_book.png");
     ImageIcon userImg = new ImageIcon("./imgs/icons/add_person.png");
     ImageIcon emprestarImg = new ImageIcon("./imgs/icons/borrow.png");
@@ -30,13 +30,13 @@ public class BibliotecaGUIV3 extends JFrame {
         setResizable(false);
         getContentPane().setBackground(Color.white);
 
-        // Título e imagem
+        
         titulo = new JLabel("Bem-vindo à Biblioteca", JLabel.CENTER);
         titulo.setForeground(Color.BLUE);
         titulo.setFont(new Font("Serif", Font.BOLD, 28));
         imagem = new JLabel(bibliotecaImg, JLabel.CENTER);
 
-        // Botões
+        
         botaoLivro = new JButton("Cadastrar Livro", addImg);
         botaoLivro.addActionListener(e -> cadastrarLivro());
 
@@ -52,7 +52,7 @@ public class BibliotecaGUIV3 extends JFrame {
         botaoSalvar = new JButton("Salvar Dados", salvarImg);
         botaoSalvar.addActionListener(e -> salvarDados());
 
-        // Layout
+        
         getContentPane().setLayout(new GridLayout(3, 2));
         getContentPane().add(titulo);
         getContentPane().add(botaoLivro);
@@ -60,7 +60,7 @@ public class BibliotecaGUIV3 extends JFrame {
         getContentPane().add(botaoUsuario);
         getContentPane().add(botaoEmprestar);
         getContentPane().add(botaoDevolver);
-        // para o salvar, pode colocar em outro painel ou menu depois
+        
 
     }
 
