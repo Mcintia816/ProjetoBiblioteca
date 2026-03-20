@@ -13,7 +13,7 @@ public class BibliotecaGUI extends JFrame {
     private Biblioteca biblioteca;
 
     public BibliotecaGUI() {
-        biblioteca = new Biblioteca(); // instancia do seu sistema
+        biblioteca = new Biblioteca(); 
 
         setTitle("Sistema de Biblioteca");
         setSize(600, 600);
@@ -21,13 +21,13 @@ public class BibliotecaGUI extends JFrame {
         setResizable(false);
         getContentPane().setBackground(Color.lightGray);
 
-        // Cria a barra de menu
+        
         JMenuBar menuBar = new JMenuBar();
 
-        // Menu principal
+        
         JMenu menu = new JMenu("Opções");
 
-        // Itens do menu
+        
         JMenuItem cadastrarLivro = new JMenuItem("Cadastrar Livro");
         cadastrarLivro.addActionListener(e -> cadastrarLivro());
 
@@ -43,7 +43,7 @@ public class BibliotecaGUI extends JFrame {
         JMenuItem salvarDados = new JMenuItem("Salvar Dados");
         salvarDados.addActionListener(e -> salvarDados());
 
-        // Adiciona itens ao menu
+        
         menu.add(cadastrarLivro);
         menu.add(cadastrarUsuario);
         menu.add(emprestarLivro);
@@ -54,7 +54,7 @@ public class BibliotecaGUI extends JFrame {
         setJMenuBar(menuBar);
     }
 
-    // Métodos para cada ação
+    
     private void cadastrarLivro() {
         String codigo = JOptionPane.showInputDialog(this, "Código do Livro:");
         String titulo = JOptionPane.showInputDialog(this, "Título:");
