@@ -10,7 +10,7 @@ import java.awt.*;
 public class BibliotecaGUIV2 extends JFrame {
 
     JLabel titulo, imagem;
-    ImageIcon bibliotecaImg = new ImageIcon("./imgs/biblioteca.jpg");// mgs
+    ImageIcon bibliotecaImg = new ImageIcon("./imgs/biblioteca.jpg");
     private Biblioteca biblioteca;
 
     public BibliotecaGUIV2() {
