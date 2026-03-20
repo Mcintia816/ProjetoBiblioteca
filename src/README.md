@@ -28,8 +28,8 @@ O sistema segue o padrão MVC:
 9. **Buscar livros por faixa de preço** – retorna livros cujo preço esteja entre valores mínimo e máximo.
 10. **Salvar dados** – persiste todos os livros, usuários e empréstimos em arquivo.
 
-> Obs.: A persistência também permite que os dados sejam carregados posteriormente com o método `carregarDados()` (ainda
-> em implementação).
+> Obs.: A persistência é feita com o método `salvarDados()`, que grava livros, usuários e empréstimos em arquivo.  
+> Os dados podem ser recuperados posteriormente usando o método `recuperarDados()`.
 
 ---
 
@@ -44,6 +44,16 @@ O sistema segue o padrão MVC:
 - Refatorar métodos longos na classe `Biblioteca` para aumentar a coesão e reduzir acoplamento.
 
 ---
+## Testes Automáticos
+
+- Testes com JUnit cobrindo:
+    - Cadastro de livros e usuários
+    - Empréstimo e devolução de livros
+    - Pesquisa de livros
+    - Verificação de disponibilidade de livros
+
+---
+
 
 ## Tecnologias e Conceitos Utilizados
 
@@ -56,4 +66,3 @@ O sistema segue o padrão MVC:
 
 ---
 
-## Estrutura do Projeto
