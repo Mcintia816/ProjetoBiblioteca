@@ -10,11 +10,11 @@ import java.awt.*;
 public class BibliotecaGUIV2 extends JFrame {
 
     JLabel titulo, imagem;
-    ImageIcon bibliotecaImg = new ImageIcon("./imgs/biblioteca.jpg"); // coloque uma imagem da biblioteca na pasta imgs
+    ImageIcon bibliotecaImg = new ImageIcon("./imgs/biblioteca.jpg");// mgs
     private Biblioteca biblioteca;
 
     public BibliotecaGUIV2() {
-        biblioteca = new Biblioteca(); // instância do sistema
+        biblioteca = new Biblioteca(); 
 
         setTitle("Sistema de Biblioteca");
         setSize(500, 500);
@@ -22,19 +22,19 @@ public class BibliotecaGUIV2 extends JFrame {
         setResizable(true);
         getContentPane().setBackground(Color.white);
 
-        // Título
+        
         titulo = new JLabel("Bem-vindo à Biblioteca", JLabel.CENTER);
         titulo.setForeground(Color.BLUE);
         titulo.setFont(new Font("Serif", Font.BOLD, 28));
 
-        // Imagem
+        
         imagem = new JLabel(bibliotecaImg, JLabel.CENTER);
 
         getContentPane().setLayout(new GridLayout(3,1));
         getContentPane().add(titulo);
         getContentPane().add(imagem);
 
-        // Cria menu
+        
         criarMenu();
     }
 
