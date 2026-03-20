@@ -14,6 +14,6 @@ public interface BibliotecaGerenciador {
     public List<Livro> buscarPorPreco(double min, double max);
     public void cadastrarUsuario(Usuario usuario) throws UsuarioJaExisteException;
     public void salvarDados() throws IOException;
-    //public void carregarDados() throws IOException, ClassCastException;
+    public void recuperarDados() throws IOException, ClassCastException;
 }
 //

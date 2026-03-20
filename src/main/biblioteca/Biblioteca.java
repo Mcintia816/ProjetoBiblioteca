@@ -92,8 +92,15 @@ public class Biblioteca implements BibliotecaGerenciador {
     }
 
 
-    public void carregarDados() {
-
+    public void recuperarDados() {
+        try {
+            Object[] dados = gravador.recuperarDados();
+            this.livros = (Map<String, Livro>) dados[0];
+            this.usuarios = (Map<String, Usuario>) dados[1];
+            this.emprestimos = (List<Emprestimo>) dados[2];
+        } catch (Exception e) {
+            System.err.println("Falha ao recuperar dados: " + e.getMessage());
+        }
     }
 }
 //
