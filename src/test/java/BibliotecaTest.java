@@ -52,8 +52,8 @@ public class BibliotecaTest {
             biblioteca.salvarDados();
             System.out.println("\nDados salvos com sucesso!");
 
-            biblioteca.carregarDados();
-            System.out.println("Dados carregados com sucesso!");
+         //   biblioteca.carregarDados();
+          //  System.out.println("Dados carregados com sucesso!");
 
         } catch (Exception e) {
             e.printStackTrace();

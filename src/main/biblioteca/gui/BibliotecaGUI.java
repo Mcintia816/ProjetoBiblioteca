@@ -6,14 +6,14 @@ import main.biblioteca.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.util.List;
 
 public class BibliotecaGUI extends JFrame {
 
     private Biblioteca biblioteca;
 
     public BibliotecaGUI() {
-        biblioteca = new Biblioteca(); 
+        biblioteca = new Biblioteca();
 
         setTitle("Sistema de Biblioteca");
         setSize(600, 600);
@@ -21,13 +21,9 @@ public class BibliotecaGUI extends JFrame {
         setResizable(false);
         getContentPane().setBackground(Color.lightGray);
 
-        
         JMenuBar menuBar = new JMenuBar();
-
-        
         JMenu menu = new JMenu("Opções");
 
-        
         JMenuItem cadastrarLivro = new JMenuItem("Cadastrar Livro");
         cadastrarLivro.addActionListener(e -> cadastrarLivro());
 
@@ -43,18 +39,30 @@ public class BibliotecaGUI extends JFrame {
         JMenuItem salvarDados = new JMenuItem("Salvar Dados");
         salvarDados.addActionListener(e -> salvarDados());
 
-        
+
+        JMenuItem pesquisarAutor = new JMenuItem("Pesquisar por Autor");
+        pesquisarAutor.addActionListener(e -> pesquisarPorAutor());
+
+        JMenuItem removerLivro = new JMenuItem("Remover Livro");
+        removerLivro.addActionListener(e -> removerLivro());
+
+        JMenuItem listarDisponiveis = new JMenuItem("Livros Disponíveis");
+        listarDisponiveis.addActionListener(e -> listarDisponiveis());
+
+
         menu.add(cadastrarLivro);
         menu.add(cadastrarUsuario);
         menu.add(emprestarLivro);
         menu.add(devolverLivro);
+        menu.add(pesquisarAutor);
+        menu.add(removerLivro);
+        menu.add(listarDisponiveis);
         menu.add(salvarDados);
 
         menuBar.add(menu);
         setJMenuBar(menuBar);
     }
 
-    
     private void cadastrarLivro() {
         String codigo = JOptionPane.showInputDialog(this, "Código do Livro:");
         String titulo = JOptionPane.showInputDialog(this, "Título:");
@@ -93,6 +101,51 @@ public class BibliotecaGUI extends JFrame {
         String codigo = JOptionPane.showInputDialog(this, "Código do Livro:");
         biblioteca.devolverLivro(codigo);
         JOptionPane.showMessageDialog(this, "Livro devolvido com sucesso!");
+    }
+
+
+    private void pesquisarPorAutor() {
+        String autor = JOptionPane.showInputDialog(this, "Nome do autor:");
+
+        try {
+            List<Livro> livros = biblioteca.pesquisarLivrosDoAutor(autor);
+
+            StringBuilder resultado = new StringBuilder("Livros encontrados:\n");
+            for (Livro l : livros) {
+                resultado.append(l.getCodigo()).append(" - ")
+                        .append(l.getTitulo()).append("\n");
+            }
+
+            JOptionPane.showMessageDialog(this, resultado.toString());
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+
+    private void removerLivro() {
+        String codigo = JOptionPane.showInputDialog(this, "Código do livro a remover:");
+        biblioteca.removerLivro(codigo);
+        JOptionPane.showMessageDialog(this, "Livro removido com sucesso!");
+    }
+
+
+    private void listarDisponiveis() {
+        List<Livro> livros = biblioteca.livrosDisponiveis();
+
+        if (livros.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum livro disponível.");
+            return;
+        }
+
+        StringBuilder resultado = new StringBuilder("Livros disponíveis:\n");
+        for (Livro l : livros) {
+            resultado.append(l.getCodigo()).append(" - ")
+                    .append(l.getTitulo()).append("\n");
+        }
+
+        JOptionPane.showMessageDialog(this, resultado.toString());
     }
 
     private void salvarDados() {

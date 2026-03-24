@@ -6,6 +6,7 @@ import main.biblioteca.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class BibliotecaGUIV3ComMenu extends JFrame {
 
@@ -21,7 +22,6 @@ public class BibliotecaGUIV3ComMenu extends JFrame {
         setResizable(false);
         getContentPane().setBackground(Color.white);
 
-        
         titulo = new JLabel("Bem-vindo à Biblioteca", JLabel.CENTER);
         titulo.setForeground(Color.BLUE);
         titulo.setFont(new Font("Serif", Font.BOLD, 24));
@@ -32,34 +32,49 @@ public class BibliotecaGUIV3ComMenu extends JFrame {
         add(imagem);
         add(new JLabel());
 
-        
+
         JMenu menuCadastrar = new JMenu("Cadastrar");
         JMenuItem menuCadastrarLivro = new JMenuItem("Cadastrar Livro");
         JMenuItem menuCadastrarUsuario = new JMenuItem("Cadastrar Usuário");
         menuCadastrar.add(menuCadastrarLivro);
         menuCadastrar.add(menuCadastrarUsuario);
 
+
         JMenu menuOperacoes = new JMenu("Operações");
         JMenuItem menuEmprestar = new JMenuItem("Emprestar Livro");
         JMenuItem menuDevolver = new JMenuItem("Devolver Livro");
+        JMenuItem menuRemover = new JMenuItem("Remover Livro");
         menuOperacoes.add(menuEmprestar);
         menuOperacoes.add(menuDevolver);
+        menuOperacoes.add(menuRemover);
+
+
+        JMenu menuConsultas = new JMenu("Consultas");
+        JMenuItem menuPesquisarAutor = new JMenuItem("Pesquisar por Autor");
+        JMenuItem menuDisponiveis = new JMenuItem("Livros Disponíveis");
+        menuConsultas.add(menuPesquisarAutor);
+        menuConsultas.add(menuDisponiveis);
+
 
         JMenu menuSalvar = new JMenu("Salvar");
         JMenuItem menuSalvarDados = new JMenuItem("Salvar Dados");
         menuSalvar.add(menuSalvarDados);
 
-        
         barraDeMenu.add(menuCadastrar);
         barraDeMenu.add(menuOperacoes);
+        barraDeMenu.add(menuConsultas);
         barraDeMenu.add(menuSalvar);
+
         setJMenuBar(barraDeMenu);
 
-        
+
         menuCadastrarLivro.addActionListener(ae -> cadastrarLivro());
         menuCadastrarUsuario.addActionListener(ae -> cadastrarUsuario());
         menuEmprestar.addActionListener(ae -> emprestarLivro());
         menuDevolver.addActionListener(ae -> devolverLivro());
+        menuRemover.addActionListener(ae -> removerLivro());
+        menuPesquisarAutor.addActionListener(ae -> pesquisarPorAutor());
+        menuDisponiveis.addActionListener(ae -> listarDisponiveis());
         menuSalvarDados.addActionListener(ae -> salvarDados());
     }
 
@@ -101,6 +116,51 @@ public class BibliotecaGUIV3ComMenu extends JFrame {
         String codigo = JOptionPane.showInputDialog(this, "Código do Livro:");
         biblioteca.devolverLivro(codigo);
         JOptionPane.showMessageDialog(this, "Livro devolvido!");
+    }
+
+
+    private void removerLivro() {
+        String codigo = JOptionPane.showInputDialog(this, "Código do livro:");
+        biblioteca.removerLivro(codigo);
+        JOptionPane.showMessageDialog(this, "Livro removido!");
+    }
+
+
+    private void pesquisarPorAutor() {
+        String autor = JOptionPane.showInputDialog(this, "Nome do autor:");
+
+        try {
+            List<Livro> livros = biblioteca.pesquisarLivrosDoAutor(autor);
+
+            StringBuilder resultado = new StringBuilder("Livros encontrados:\n");
+            for (Livro l : livros) {
+                resultado.append(l.getCodigo()).append(" - ")
+                        .append(l.getTitulo()).append("\n");
+            }
+
+            JOptionPane.showMessageDialog(this, resultado.toString());
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+
+    private void listarDisponiveis() {
+        List<Livro> livros = biblioteca.livrosDisponiveis();
+
+        if (livros.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum livro disponível.");
+            return;
+        }
+
+        StringBuilder resultado = new StringBuilder("Livros disponíveis:\n");
+        for (Livro l : livros) {
+            resultado.append(l.getCodigo()).append(" - ")
+                    .append(l.getTitulo()).append("\n");
+        }
+
+        JOptionPane.showMessageDialog(this, resultado.toString());
     }
 
     private void salvarDados() {

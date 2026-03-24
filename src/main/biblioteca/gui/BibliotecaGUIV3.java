@@ -6,6 +6,7 @@ import main.biblioteca.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class BibliotecaGUIV3 extends JFrame {
 
@@ -19,6 +20,9 @@ public class BibliotecaGUIV3 extends JFrame {
 
     JButton botaoLivro, botaoUsuario, botaoEmprestar, botaoDevolver, botaoSalvar;
 
+
+    JButton botaoPesquisarAutor, botaoRemoverLivro, botaoDisponiveis;
+
     private Biblioteca biblioteca;
 
     public BibliotecaGUIV3() {
@@ -30,13 +34,12 @@ public class BibliotecaGUIV3 extends JFrame {
         setResizable(false);
         getContentPane().setBackground(Color.white);
 
-        
         titulo = new JLabel("Bem-vindo à Biblioteca", JLabel.CENTER);
         titulo.setForeground(Color.BLUE);
         titulo.setFont(new Font("Serif", Font.BOLD, 28));
+
         imagem = new JLabel(bibliotecaImg, JLabel.CENTER);
 
-        
         botaoLivro = new JButton("Cadastrar Livro", addImg);
         botaoLivro.addActionListener(e -> cadastrarLivro());
 
@@ -52,16 +55,32 @@ public class BibliotecaGUIV3 extends JFrame {
         botaoSalvar = new JButton("Salvar Dados", salvarImg);
         botaoSalvar.addActionListener(e -> salvarDados());
 
-        
-        getContentPane().setLayout(new GridLayout(3, 2));
+
+        botaoPesquisarAutor = new JButton("Pesquisar Autor");
+        botaoPesquisarAutor.addActionListener(e -> pesquisarPorAutor());
+
+        botaoRemoverLivro = new JButton("Remover Livro");
+        botaoRemoverLivro.addActionListener(e -> removerLivro());
+
+        botaoDisponiveis = new JButton("Livros Disponíveis");
+        botaoDisponiveis.addActionListener(e -> listarDisponiveis());
+
+
+        getContentPane().setLayout(new GridLayout(4, 3));
+
         getContentPane().add(titulo);
         getContentPane().add(botaoLivro);
-        getContentPane().add(imagem);
         getContentPane().add(botaoUsuario);
+
+        getContentPane().add(imagem);
         getContentPane().add(botaoEmprestar);
         getContentPane().add(botaoDevolver);
-        
 
+        getContentPane().add(botaoPesquisarAutor);
+        getContentPane().add(botaoRemoverLivro);
+        getContentPane().add(botaoDisponiveis);
+
+        getContentPane().add(botaoSalvar);
     }
 
     private void cadastrarLivro() {
@@ -102,6 +121,50 @@ public class BibliotecaGUIV3 extends JFrame {
         String codigo = JOptionPane.showInputDialog(this, "Código do Livro:");
         biblioteca.devolverLivro(codigo);
         JOptionPane.showMessageDialog(this, "Livro devolvido!");
+    }
+
+    private void pesquisarPorAutor() {
+        String autor = JOptionPane.showInputDialog(this, "Nome do autor:");
+
+        try {
+            List<Livro> livros = biblioteca.pesquisarLivrosDoAutor(autor);
+
+            StringBuilder resultado = new StringBuilder("Livros encontrados:\n");
+            for (Livro l : livros) {
+                resultado.append(l.getCodigo()).append(" - ")
+                        .append(l.getTitulo()).append("\n");
+            }
+
+            JOptionPane.showMessageDialog(this, resultado.toString());
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+
+    private void removerLivro() {
+        String codigo = JOptionPane.showInputDialog(this, "Código do livro:");
+        biblioteca.removerLivro(codigo);
+        JOptionPane.showMessageDialog(this, "Livro removido!");
+    }
+
+
+    private void listarDisponiveis() {
+        List<Livro> livros = biblioteca.livrosDisponiveis();
+
+        if (livros.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum livro disponível.");
+            return;
+        }
+
+        StringBuilder resultado = new StringBuilder("Livros disponíveis:\n");
+        for (Livro l : livros) {
+            resultado.append(l.getCodigo()).append(" - ")
+                    .append(l.getTitulo()).append("\n");
+        }
+
+        JOptionPane.showMessageDialog(this, resultado.toString());
     }
 
     private void salvarDados() {
