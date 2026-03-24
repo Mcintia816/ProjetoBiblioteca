@@ -11,12 +11,12 @@ import java.util.List;
 public class BibliotecaGUIV3 extends JFrame {
 
     JLabel titulo, imagem;
-    ImageIcon bibliotecaImg = new ImageIcon("./imgs/biblioteca.jpg");
-    ImageIcon addImg = new ImageIcon("./imgs/icons/add_book.png");
-    ImageIcon userImg = new ImageIcon("./imgs/icons/add_person.png");
-    ImageIcon emprestarImg = new ImageIcon("./imgs/icons/borrow.png");
-    ImageIcon devolverImg = new ImageIcon("./imgs/icons/return.png");
-    ImageIcon salvarImg = new ImageIcon("./imgs/icons/save.png");
+    ImageIcon bibliotecaImg = new ImageIcon("imgs/biblioteca.png");
+    ImageIcon addImg = new ImageIcon("imgs/icons/add_book.png");
+    ImageIcon userImg = new ImageIcon("imgs/icons/add_person.png");
+    ImageIcon emprestarImg = new ImageIcon("imgs/icons/borrow.png");
+    ImageIcon devolverImg = new ImageIcon("imgs/icons/return.png");
+    ImageIcon salvarImg = new ImageIcon("imgs/icons/save.png");
 
     JButton botaoLivro, botaoUsuario, botaoEmprestar, botaoDevolver, botaoSalvar;
 
@@ -181,4 +181,8 @@ public class BibliotecaGUIV3 extends JFrame {
         janela.setVisible(true);
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
+
+
+
 }

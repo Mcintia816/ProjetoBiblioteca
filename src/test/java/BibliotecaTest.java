@@ -48,7 +48,6 @@ public class BibliotecaTest {
             System.out.println("\n=== Livros disponíveis após devolução ===");
             biblioteca.livrosDisponiveis().forEach(System.out::println);
 
-
             biblioteca.salvarDados();
             System.out.println("\nDados salvos com sucesso!");
 

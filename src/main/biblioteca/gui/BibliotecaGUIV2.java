@@ -11,7 +11,7 @@ import java.util.List;
 public class BibliotecaGUIV2 extends JFrame {
 
     JLabel titulo, imagem;
-    ImageIcon bibliotecaImg = new ImageIcon("./imgs/biblioteca.jpg");
+    ImageIcon bibliotecaImg = new ImageIcon("imgs/biblioteca.jpg");
     private Biblioteca biblioteca;
 
     public BibliotecaGUIV2() {
