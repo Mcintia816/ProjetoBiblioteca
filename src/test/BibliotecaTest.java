@@ -31,7 +31,7 @@ public class BibliotecaTest {
 
             try {
                 biblioteca.cadastrarLivro(l1);
-                Assert.fail("Deveria lançar LivroJaExisteException");
+                Assert.fail("Deveria lançar Exceção");
             } catch (LivroJaExisteException ignored) {}
 
 
@@ -41,7 +41,7 @@ public class BibliotecaTest {
 
             try {
                 biblioteca.cadastrarUsuario(u1);
-                Assert.fail("Deveria lançar UsuarioJaExisteException");
+                Assert.fail("Deveria lançar Exceção");
             } catch (UsuarioJaExisteException ignored) {}
 
 
@@ -79,7 +79,7 @@ public class BibliotecaTest {
 
             try {
                 biblioteca.pesquisarLivrosDoAutor("Autor Inexistente");
-                Assert.fail("Deveria lançar LivroNaoExisteException");
+                Assert.fail("Deveria lançar Exceção");
             } catch (LivroNaoExisteException ignored) {}
 
 
@@ -101,7 +101,7 @@ public class BibliotecaTest {
             try {
                 biblioteca.salvarDados();
             } catch (IOException e) {
-                Assert.fail("Não deveria lançar IOException ao salvar");
+                Assert.fail("Não deveria lançar Exceção ao salvar");
             }
 
         } catch (Exception e) {
