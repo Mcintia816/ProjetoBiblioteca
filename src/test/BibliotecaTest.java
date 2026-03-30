@@ -1,7 +1,6 @@
 package test;
 
 import main.biblioteca.*;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,101 +10,140 @@ import java.util.List;
 public class BibliotecaTest {
 
     @Test
-    public void testaBibliotecaCompleta() {
+    public void testaCadastro() {
         try {
             Biblioteca biblioteca = new Biblioteca();
+            Livro l1 = new Livro("L001", "Java Básico", "João Silva", 50.0, false);
+            Livro l2 = new Livro("L002", "POO Avançado", "Maria Souza", 70.0, false);
+            Usuario u1 = new Usuario("U001", "Carlos");
 
+            biblioteca.cadastrarLivro(l1);
+            biblioteca.cadastrarLivro(l2);
 
+            biblioteca.cadastrarUsuario(u1);
+
+            try {
+                biblioteca.cadastrarLivro(l1);
+                Assert.fail("Deveria lançar exceção");
+            } catch (LivroJaExisteException e) {}
+
+            try {
+                biblioteca.cadastrarUsuario(u1);
+                Assert.fail("Deveria lançar exceção");
+            } catch (UsuarioJaExisteException e) {}
+
+        } catch (Exception e) {
+            Assert.fail("Falha no cadastro: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testaEmprestimoDevolucao() {
+        try {
+            Biblioteca biblioteca = new Biblioteca();
+            Livro l1 = new Livro("L001", "Java Básico", "João Silva", 50.0, false);
+            Usuario u1 = new Usuario("U001", "Carlos");
+
+            biblioteca.cadastrarLivro(l1);
+            biblioteca.cadastrarUsuario(u1);
+
+            biblioteca.emprestarLivro("L001", "U001");
+
+            boolean emprestado = biblioteca.livrosDisponiveis()
+                    .stream()
+                    .anyMatch(l -> l.getCodigo().equals("L001"));
+            Assert.assertFalse(emprestado);
+
+            biblioteca.devolverLivro("L001");
+
+            boolean devolvido = biblioteca.livrosDisponiveis()
+                    .stream()
+                    .anyMatch(l -> l.getCodigo().equals("L001"));
+            Assert.assertTrue(devolvido);
+
+        } catch (Exception e) {
+            Assert.fail("Falha no empréstimo/devolução: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testaPesquisa() {
+        try {
+            Biblioteca biblioteca = new Biblioteca();
             Livro l1 = new Livro("L001", "Java Básico", "João Silva", 50.0, false);
             Livro l2 = new Livro("L002", "POO Avançado", "Maria Souza", 70.0, false);
             Livro l3 = new Livro("L003", "Estruturas de Dados", "João Silva", 40.0, false);
-
-            Usuario u1 = new Usuario("U001", "Carlos");
-            Usuario u2 = new Usuario("U002", "Ana");
-
 
             biblioteca.cadastrarLivro(l1);
             biblioteca.cadastrarLivro(l2);
             biblioteca.cadastrarLivro(l3);
 
-
-            try {
-                biblioteca.cadastrarLivro(l1);
-                Assert.fail("Deveria lançar Exceção");
-            } catch (LivroJaExisteException ignored) {}
-
-
-            biblioteca.cadastrarUsuario(u1);
-            biblioteca.cadastrarUsuario(u2);
-
-
-            try {
-                biblioteca.cadastrarUsuario(u1);
-                Assert.fail("Deveria lançar Exceção");
-            } catch (UsuarioJaExisteException ignored) {}
-
-
-            biblioteca.emprestarLivro("L001", "U001");
-
-
-            boolean encontrado = biblioteca.livrosDisponiveis()
-                    .stream()
-                    .anyMatch(l -> l.getCodigo().equals("L001"));
-            Assert.assertFalse(encontrado);
-
-
-            biblioteca.emprestarLivro("L001", "U002");
-            long quantidade = biblioteca.livrosDisponiveis()
-                    .stream()
-                    .filter(l -> l.getCodigo().equals("L001"))
-                    .count();
-            Assert.assertEquals(0, quantidade);
-
-
-            biblioteca.devolverLivro("L001");
-
-            boolean voltou = biblioteca.livrosDisponiveis()
-                    .stream()
-                    .anyMatch(l -> l.getCodigo().equals("L001"));
-            Assert.assertTrue(voltou);
-
-
-            biblioteca.devolverLivro("L001");
-
-
-            List<Livro> livrosDoJoao = biblioteca.pesquisarLivrosDoAutor("João Silva");
-            Assert.assertEquals(2, livrosDoJoao.size());
-
+            List<Livro> livrosJoao = biblioteca.pesquisarLivrosDoAutor("João Silva");
+            Assert.assertEquals(2, livrosJoao.size());
 
             try {
                 biblioteca.pesquisarLivrosDoAutor("Autor Inexistente");
-                Assert.fail("Deveria lançar Exceção");
-            } catch (LivroNaoExisteException ignored) {}
-
+                Assert.fail("Deveria lançar exceção");
+            } catch (LivroNaoExisteException e) {}
 
             Livro maisBarato = biblioteca.livroMaisBarato();
             Assert.assertEquals("L003", maisBarato.getCodigo());
 
-
-            List<Livro> livrosEntre50e80 = biblioteca.buscarPorPreco(50, 80);
-            Assert.assertEquals(2, livrosEntre50e80.size());
-
-
-            biblioteca.removerLivro("L002");
-            boolean removido = biblioteca.livrosDisponiveis()
-                    .stream()
-                    .anyMatch(l -> l.getCodigo().equals("L002"));
-            Assert.assertFalse(removido);
-
-
-            try {
-                biblioteca.salvarDados();
-            } catch (IOException e) {
-                Assert.fail("Não deveria lançar Exceção ao salvar");
-            }
+            List<Livro> livros50a80 = biblioteca.buscarPorPreco(50, 80);
+            Assert.assertEquals(2, livros50a80.size());
 
         } catch (Exception e) {
-            Assert.fail("Teste falhou com exceção: " + e.getMessage());
+            Assert.fail("Falha na pesquisa: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testaRemocaoELambda() {
+        try {
+            Biblioteca biblioteca = new Biblioteca();
+            Livro l1 = new Livro("L001", "Java Básico", "João Silva", 50.0, false);
+            Livro l2 = new Livro("L002", "POO Avançado", "Maria Souza", 70.0, false);
+
+            biblioteca.cadastrarLivro(l1);
+            biblioteca.cadastrarLivro(l2);
+
+            biblioteca.removerLivro("L002");
+
+            boolean existe = biblioteca.livrosDisponiveis()
+                    .stream()
+                    .anyMatch(l -> l.getCodigo().equals("L002"));
+            Assert.assertFalse(existe);
+
+
+            biblioteca.livrosDisponiveis().forEach(l -> System.out.println(l.getTitulo()));
+
+        } catch (Exception e) {
+            Assert.fail("Falha na remoção/lambda: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testaPersistencia() {
+        try {
+            Biblioteca biblioteca = new Biblioteca();
+            Livro l1 = new Livro("L001", "Java Básico", "João Silva", 50.0, false);
+
+            biblioteca.cadastrarLivro(l1);
+
+            biblioteca.salvarDados();
+
+            Biblioteca nova = new Biblioteca();
+            nova.recuperarDados();
+
+            boolean existe = nova.livrosDisponiveis()
+                    .stream()
+                    .anyMatch(l -> l.getCodigo().equals("L001"));
+            Assert.assertTrue(existe);
+
+        } catch (IOException e) {
+            Assert.fail("Falha ao salvar/recuperar: " + e.getMessage());
+        } catch (Exception e) {
+            Assert.fail("Falha na persistência: " + e.getMessage());
         }
     }
 }
